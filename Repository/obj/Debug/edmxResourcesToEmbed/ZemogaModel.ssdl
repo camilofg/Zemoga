@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZemogaDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EmpPhoto" Type="varbinary(max)" />
+    <Property Name="EmpName" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="EmpPosition" Type="int" Nullable="false" />
+    <Property Name="EmpProject" Type="int" />
+  </EntityType>
+  <EntityType Name="Employee_Skills">
+    <Key>
+      <PropertyRef Name="EmSkEmpID" />
+      <PropertyRef Name="EmSkSkillID" />
+    </Key>
+    <Property Name="EmSkEmpID" Type="int" Nullable="false" />
+    <Property Name="EmSkSkillID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PosID" />
+    </Key>
+    <Property Name="PosID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PosDesc" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProDesc" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="SkiID" />
+    </Key>
+    <Property Name="SkiID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SkiDesc" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Employee_Position">
+    <End Role="Position" Type="Self.Position" Multiplicity="1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PosID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmpPosition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Projects">
+    <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="ProID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmpProject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Skills_Employee">
+    <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+    <End Role="Employee_Skills" Type="Self.Employee_Skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="EmpID" />
+      </Principal>
+      <Dependent Role="Employee_Skills">
+        <PropertyRef Name="EmSkEmpID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Skills_Skill">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="1" />
+    <End Role="Employee_Skills" Type="Self.Employee_Skills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="SkiID" />
+      </Principal>
+      <Dependent Role="Employee_Skills">
+        <PropertyRef Name="EmSkSkillID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="AddSkillEmp" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="int" Mode="In" />
+    <Parameter Name="Skills" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="DeleteEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Get_Employees" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Filter" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="GetSkillsByEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmpID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SkillsListByEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varchar">
+    <Parameter Name="EmployeeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Split1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="input" Type="varchar" Mode="In" />
+    <ReturnType>
+      <CollectionType>
+        <RowType>
+          <Property Name="Value" Type="bigint" />
+        </RowType>
+      </CollectionType>
+    </ReturnType>
+  </Function>
+  <EntityContainer Name="ZemogaDBModelStoreContainer">
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee_Skills" EntityType="Self.Employee_Skills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_Position" Association="Self.FK_Employee_Position">
+      <End Role="Position" EntitySet="Position" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Projects" Association="Self.FK_Employee_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Skills_Employee" Association="Self.FK_Employee_Skills_Employee">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Employee_Skills" EntitySet="Employee_Skills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Skills_Skill" Association="Self.FK_Employee_Skills_Skill">
+      <End Role="Skill" EntitySet="Skill" />
+      <End Role="Employee_Skills" EntitySet="Employee_Skills" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

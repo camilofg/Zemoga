@@ -1,0 +1,24 @@
+﻿@model ZemogaDevTest.Models.Picture
+@{
+    ViewBag.Title = "UploadImage";
+}
+
+@using (Html.BeginForm("AddImage", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @ViewBag.Error
+    <br />
+    <table>
+        <tr>
+            <td>
+                Image:
+            </td>
+            <td>
+                <input type="file" name="File" id="File" />
+            </td>
+            <td>&nbsp;</td>
+            <td>
+                <input type="submit" name="submit" value="Upload" />
+            </td>
+        </tr>
+    </table>
+}

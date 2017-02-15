@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ZemogaDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Position">
+    <Key>
+      <PropertyRef Name="PosID" />
+    </Key>
+    <Property Name="PosID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PosDesc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="ZemogaDBModel.FK_Employee_Position" FromRole="Position" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="ProID" />
+    </Key>
+    <Property Name="ProID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProDesc" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Employee" Relationship="ZemogaDBModel.FK_Employee_Projects" FromRole="Projects" ToRole="Employee" />
+  </EntityType>
+  <EntityContainer Name="ZemogaDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Position" EntityType="Self.Position" />
+    <EntitySet Name="Projects" EntityType="Self.Projects" />
+    <EntitySet Name="Skill" EntityType="ZemogaDBModel.Skill" />
+    <EntitySet Name="Employee" EntityType="ZemogaDBModel.Employee" />
+    <AssociationSet Name="FK_Employee_Position" Association="ZemogaDBModel.FK_Employee_Position">
+      <End Role="Position" EntitySet="Position" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_Projects" Association="ZemogaDBModel.FK_Employee_Projects">
+      <End Role="Projects" EntitySet="Projects" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="Employee_Skills" Association="ZemogaDBModel.Employee_Skills">
+      <End Role="Employee" EntitySet="Employee" />
+      <End Role="Skill" EntitySet="Skill" />
+    </AssociationSet>
+    <FunctionImport Name="Get_Employees" ReturnType="Collection(ZemogaDBModel.Get_Employees_Result)">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="AddSkillEmp">
+      <Parameter Name="EmpID" Mode="In" Type="Int32" />
+      <Parameter Name="Skills" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Split1" IsComposable="true" ReturnType="Collection(Int64)">
+      <Parameter Name="input" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="GetSkillsByEmployee" ReturnType="Collection(ZemogaDBModel.GetSkillsByEmployee_Result)">
+      <Parameter Name="EmpID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="DeleteEmployee">
+      <Parameter Name="EmpID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="SkiID" />
+    </Key>
+    <Property Name="SkiID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SkiDesc" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Employee" Relationship="ZemogaDBModel.Employee_Skills" FromRole="Skill" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmpID" />
+    </Key>
+    <Property Name="EmpID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EmpName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="EmpPosition" Type="Int32" Nullable="false" />
+    <Property Name="EmpProject" Type="Int32" />
+    <NavigationProperty Name="Position" Relationship="ZemogaDBModel.FK_Employee_Position" FromRole="Employee" ToRole="Position" />
+    <NavigationProperty Name="Projects" Relationship="ZemogaDBModel.FK_Employee_Projects" FromRole="Employee" ToRole="Projects" />
+    <NavigationProperty Name="Skill" Relationship="ZemogaDBModel.Employee_Skills" FromRole="Employee" ToRole="Skill" />
+    <Property Name="EmpPhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Employee_Position">
+    <End Type="ZemogaDBModel.Position" Role="Position" Multiplicity="1" />
+    <End Type="ZemogaDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="PosID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmpPosition" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_Projects">
+    <End Type="ZemogaDBModel.Projects" Role="Projects" Multiplicity="0..1" />
+    <End Type="ZemogaDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Projects">
+        <PropertyRef Name="ProID" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="EmpProject" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Employee_Skills">
+    <End Type="ZemogaDBModel.Employee" Role="Employee" Multiplicity="*" />
+    <End Type="ZemogaDBModel.Skill" Role="Skill" Multiplicity="*" />
+  </Association>
+  <ComplexType Name="Get_Employees_Result">
+    <Property Type="Int32" Name="EmpID" Nullable="false" />
+    <Property Type="String" Name="EmpName" Nullable="false" MaxLength="150" />
+    <Property Type="Binary" Name="EmpPhoto" Nullable="true" />
+    <Property Type="String" Name="Position" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Project" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="Skills" Nullable="true" MaxLength="250" />
+  </ComplexType>
+  <ComplexType Name="GetSkillsByEmployee_Result">
+    <Property Type="String" Name="SkiDesc" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="SkiID" Nullable="false" />
+    <Property Type="Boolean" Name="Checked" Nullable="true" />
+  </ComplexType>
+</Schema>

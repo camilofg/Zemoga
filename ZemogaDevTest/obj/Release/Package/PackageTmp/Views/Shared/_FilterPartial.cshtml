@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "_FilterPartial";
+}
+
+<div class="row">
+    <div class="col-sm-2" style="text-align:right">
+        <label for="inputdefault" style="text-align:right; font-size: 18px;">Employee :</label>
+    </div>
+    <div class="col-sm-3">
+        @Html.TextBox("SearchString", "", new { @class = "form-control" })
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-sm-2">
+        <button id="BtnSearch" type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-search"></span> Search
+        </button>
+    </div>
+</div>
+
+

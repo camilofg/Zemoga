@@ -1,0 +1,9 @@
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\Repository.dll.config
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\Repository.dll
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\Repository.pdb
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\EntityFramework.dll
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\EntityFramework.SqlServer.dll
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\EntityFramework.xml
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\bin\Release\EntityFramework.SqlServer.xml
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\obj\Release\Repository.dll
+c:\Users\Pc\Documents\Visual Studio 2015\Projects\ZemogaDevTest\Repository\obj\Release\Repository.pdb

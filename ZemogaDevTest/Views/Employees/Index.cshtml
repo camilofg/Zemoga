@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Repository.Employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpPhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmpName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Position.PosDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Projects.ProDesc)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+           @if (item.EmpPhoto != null)
+           {
+            <img src="@String.Format("data:image/jpg;base64,{0}",
+           Convert.ToBase64String(item.EmpPhoto));" width="42" height="42" />
+           }
+           else
+           {
+            <img src="~/Images/No_Photo.png" width="42" height="42" />
+           }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmpName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Position.PosDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Projects.ProDesc)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EmpID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EmpID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EmpID })
+        </td>
+    </tr>
+}
+
+</table>

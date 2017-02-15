@@ -1,0 +1,57 @@
+﻿@model Repository.Employee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Photo
+        </dt>
+
+        <dd>
+            @if (Model.EmpPhoto != null)
+            {
+                <img src="@String.Format("data:image/jpg;base64,{0}",
+           Convert.ToBase64String(Model.EmpPhoto));" width="200" height="200" />
+            }
+            else
+            {
+                <img src="~/Images/No_Photo.png" />
+            }
+        </dd>
+
+        <dt>
+            Name
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmpName)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.EmpPosition, "Position")
+        </dt>
+
+        <dd>
+            @ViewBag.Position
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.EmpProject, "Project")
+        </dt>
+
+        <dd>
+            @ViewBag.Project
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmpID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

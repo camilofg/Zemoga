@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ZemogaDBModelStoreContainer" CdmEntityContainer="ZemogaDBEntities">
+    <EntitySetMapping Name="Position">
+      <EntityTypeMapping TypeName="ZemogaDBModel.Position">
+        <MappingFragment StoreEntitySet="Position">
+          <ScalarProperty Name="PosID" ColumnName="PosID" />
+          <ScalarProperty Name="PosDesc" ColumnName="PosDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="ZemogaDBModel.Projects">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="ProID" ColumnName="ProID" />
+          <ScalarProperty Name="ProDesc" ColumnName="ProDesc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skill">
+      <EntityTypeMapping TypeName="ZemogaDBModel.Skill">
+        <MappingFragment StoreEntitySet="Skill">
+          <ScalarProperty Name="SkiDesc" ColumnName="SkiDesc" />
+          <ScalarProperty Name="SkiID" ColumnName="SkiID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee">
+      <EntityTypeMapping TypeName="ZemogaDBModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="EmpPhoto" ColumnName="EmpPhoto" />
+          <ScalarProperty Name="EmpProject" ColumnName="EmpProject" />
+          <ScalarProperty Name="EmpPosition" ColumnName="EmpPosition" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Employee_Skills" TypeName="ZemogaDBModel.Employee_Skills" StoreEntitySet="Employee_Skills">
+      <EndProperty Name="Skill">
+        <ScalarProperty Name="SkiID" ColumnName="EmSkSkillID" />
+      </EndProperty>
+      <EndProperty Name="Employee">
+        <ScalarProperty Name="EmpID" ColumnName="EmSkEmpID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="Get_Employees" FunctionName="ZemogaDBModel.Store.Get_Employees">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ZemogaDBModel.Get_Employees_Result">
+          <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+          <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+          <ScalarProperty Name="EmpPhoto" ColumnName="EmpPhoto" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="Project" ColumnName="Project" />
+          <ScalarProperty Name="Skills" ColumnName="Skills" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="AddSkillEmp" FunctionName="ZemogaDBModel.Store.AddSkillEmp" />
+    <FunctionImportMapping FunctionImportName="Split1" FunctionName="ZemogaDBModel.Store.Split1" />
+    <FunctionImportMapping FunctionImportName="GetSkillsByEmployee" FunctionName="ZemogaDBModel.Store.GetSkillsByEmployee">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ZemogaDBModel.GetSkillsByEmployee_Result">
+          <ScalarProperty Name="SkiDesc" ColumnName="SkiDesc" />
+          <ScalarProperty Name="SkiID" ColumnName="SkiID" />
+          <ScalarProperty Name="Checked" ColumnName="Checked" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="DeleteEmployee" FunctionName="ZemogaDBModel.Store.DeleteEmployee" />
+  </EntityContainerMapping>
+</Mapping>
